@@ -58,8 +58,9 @@
 ;;Display numbers
 ;;(global-display-line-numbers-mode)
 (global-linum-mode 1)
+
 ;;Nyan mode
-(nyan-mode)
+(add-hook 'after-init-hook 'nyan-mode)
 (setq nyan-animate-nyancat t)
 (setq nyan-wavy-trail t)
 ;;
@@ -96,12 +97,16 @@
 ;;YASNIPPET
 (yas-global-mode 1)
 
+;; DASHBOARD STUFF
+(add-hook 'dashboard-mode-hook (lambda () (progn
+					   (setq left-margin-width 13)
+					   (setq right-margin-width 0))))
 ;;
 ;; ORG CONFIGS
 ;;
 
 ;; TRUNCATE!
-(add-hook 'org-mode-hook (lambda () (proqn (toggle-truncate-lines))))
+(add-hook 'org-mode-hook (lambda () (progn (toggle-truncate-lines))))
 (global-visual-line-mode t)
 
 ;;NO LINUM
@@ -146,9 +151,11 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
- '(custom-enabled-themes '(poet))
+ '(custom-enabled-themes '(vscode-dark-plus))
  '(custom-safe-themes
    '("f490984d405f1a97418a92f478218b8e4bcc188cf353e5dd5d5acd2f8efd0790" "35c096aa0975d104688a9e59e28860f5af6bb4459fd692ed47557727848e6dfe" "28a104f642d09d3e5c62ce3464ea2c143b9130167282ea97ddcc3607b381823f" "2d035eb93f92384d11f18ed00930e5cc9964281915689fa035719cab71766a15" "d44d470f27bd068eaa3b786e8ba241dad39b5c0db5602abc490276419a361f35" "8f567db503a0d27202804f2ee51b4cd409eab5c4374f57640317b8fcbbd3e466" default))
+ '(fci-rule-color "#dedede")
+ '(line-spacing 0.2)
  '(package-selected-packages
    '(writeroom-mode org-bullets all-the-icons-gnus doom-modeline yasnippet vscode-dark-plus-theme lsp-mode modern-cpp-font-lock ## company molokai-theme nyan-mode powerline evil)))
 (custom-set-faces
@@ -156,4 +163,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "PragmataPro" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
+ '(default ((t (:family "PragmataPro" :foundry "outline" :slant normal :weight normal :height 120 :width normal))))
+ '(header-line ((t (:inherit nil :background "gray12" :foreground "#ffffff" :box nil)))))
+
