@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Consolas NF" :size 20 :weight 'Medium))
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 24))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -82,3 +82,16 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+;; ORG MODE CONFIGURATION
+(after! org
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+  (custom-theme-set-faces
+   'user
+   '(org-block ((t (:inherit fixed-pitch))))
+   '(org-code ((t (:inherit fixed-pitch))))
+   '(org-table ((t (:inherit fixed-pitch))))
+   )
+)
