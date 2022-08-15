@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Consolas NF" :size 20 :weight 'Medium))
-(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 24))
+(setq doom-font (font-spec :family "Consolas NF" :size 16 :weight 'Medium))
+(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 16))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -85,6 +85,30 @@
 
 ;; ORG MODE CONFIGURATION
 (after! org
+(let* ((variable-tuple
+        (cond ((x-list-fonts   "ETBembo")         '(:font   "ETBembo"))
+              ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
+              ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
+              ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+              ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
+              (nil (warn "Cannot find a Sans Serif Font."))))
+       (base-font-color (face-foreground 'default nil 'default))
+       (headline `(:inherit default :weight bold
+                   :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+        '(org-level-8        ((t (,@headline ,@variable-tuple))))
+        '(org-level-7        ((t (,@headline ,@variable-tuple))))
+        '(org-level-6        ((t (,@headline ,@variable-tuple))))
+        '(org-level-5        ((t (,@headline ,@variable-tuple))))
+        '(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
+        '(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
+        '(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
+        '(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+        '(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
+        '(org-document-title ((t (,@headline ,@variable-tuple
+                                        :height 2.0 :underline nil))))))
   (add-hook 'org-mode-hook 'variable-pitch-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'display-line-numbers-mode)
@@ -94,4 +118,7 @@
    '(org-code ((t (:inherit fixed-pitch))))
    '(org-table ((t (:inherit fixed-pitch))))
    )
+  (setq org-roam-directory "~/org/roam/")
+  (setq org-roam-index-file "~/org/roam/index.org")
+  (global-display-line-numbers-mode 0)
 )
