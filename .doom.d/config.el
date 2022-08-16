@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "Consolas NF" :size 16 :weight 'Medium))
-(setq doom-variable-pitch-font (font-spec :family "EtBembo" :size 16))
+(setq doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 16))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -44,7 +44,7 @@
 (setq org-agenda-files '("~/org"))
 
 
-(setq-default line-spacing 3)
+(setq-default line-spacing 1)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -86,10 +86,8 @@
 ;; ORG MODE CONFIGURATION
 (after! org
 (let* ((variable-tuple
-        (cond ((x-list-fonts   "ETBembo")         '(:font   "ETBembo"))
-              ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
-              ((x-list-fonts   "Lucida Grande")   '(:font   "Lucida Grande"))
-              ((x-list-fonts   "Verdana")         '(:font   "Verdana"))
+        (cond
+         ((x-list-fonts   "Source Sans Pro") '(:font   "Source Sans Pro"))
               ((x-family-fonts "Sans Serif")      '(:family "Sans Serif"))
               (nil (warn "Cannot find a Sans Serif Font."))))
        (base-font-color (face-foreground 'default nil 'default))
@@ -102,16 +100,18 @@
         '(org-level-7        ((t (,@headline ,@variable-tuple))))
         '(org-level-6        ((t (,@headline ,@variable-tuple))))
         '(org-level-5        ((t (,@headline ,@variable-tuple))))
-        '(org-level-4        ((t (,@headline ,@variable-tuple :height 1.1))))
-        '(org-level-3        ((t (,@headline ,@variable-tuple :height 1.25))))
-        '(org-level-2        ((t (,@headline ,@variable-tuple :height 1.5))))
-        '(org-level-1        ((t (,@headline ,@variable-tuple :height 1.75))))
+        '(org-level-4        ((t (,@headline ,@variable-tuple :height 1.0))))
+        '(org-level-3        ((t (,@headline ,@variable-tuple :height 1.15))))
+        '(org-level-2        ((t (,@headline ,@variable-tuple :height 1.25))))
+        '(org-level-1        ((t (,@headline ,@variable-tuple :height 1.5))))
         '(org-headline-done  ((t (,@headline ,@variable-tuple :strike-through t))))
         '(org-document-title ((t (,@headline ,@variable-tuple
                                         :height 2.0 :underline nil))))))
   (add-hook 'org-mode-hook 'variable-pitch-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
-  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+  (add-hook 'org-mode-hook 'global-display-line-numbers-mode)
+;;  (add-hook 'org-mode-hook 'writeroom-mode)
+
   (custom-theme-set-faces
    'user
    '(org-block ((t (:inherit fixed-pitch))))
@@ -120,5 +120,4 @@
    )
   (setq org-roam-directory "~/org/roam/")
   (setq org-roam-index-file "~/org/roam/index.org")
-  (global-display-line-numbers-mode 0)
 )
